@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hyperledger/anoncreds-nodejs": "^0.1.0",
+    "@hyperledger/aries-askar-nodejs": "^0.1.0",
     "@types/axios": "^0.14.0",
     "@types/morgan": "^1.9.4",
     "axios": "^1.4.0",
