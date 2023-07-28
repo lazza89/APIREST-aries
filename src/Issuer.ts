@@ -4,12 +4,10 @@ import type {
   IndyVdrRegisterSchemaOptions,
   IndyVdrRegisterCredentialDefinitionOptions,
 } from '@aries-framework/indy-vdr'
-import type BottomBar from 'inquirer/lib/ui/bottom-bar'
 
 import { ConnectionEventTypes, KeyType, TypedArrayEncoder, utils } from '@aries-framework/core'
-import { ui } from 'inquirer'
 
-import { BaseAgent, indyNetworkConfig } from './BaseAgent'
+import { BaseAgent } from './BaseAgent'
 import { Color, Output, greenText, purpleText, redText } from './OutputClass'
 
 export enum RegistryOptions {
@@ -21,11 +19,9 @@ export class Issuer extends BaseAgent {
   public outOfBandId?: string
   public credentialDefinition?: RegisterCredentialDefinitionReturnStateFinished
   public anonCredsIssuerId?: string
-  public ui: BottomBar
 
   public constructor(port: number, name: string) {
     super({ port, name, useLegacyIndySdk: true })
-    this.ui = new ui.BottomBar()
   }
 
   public static async build(): Promise<Issuer> {
@@ -34,15 +30,13 @@ export class Issuer extends BaseAgent {
     return faber
   }
 
-  public async importDid(registry: string) {
+  public async importDid() {
     // NOTE: we assume the did is already registered on the ledger, we just store the private key in the wallet
     // and store the existing did in the wallet
     // indy did is based on private key (seed)
-    const unqualifiedIndyDid = '2jEvRuKmfBJTRa7QowDpNN'
     const cheqdDid = 'did:cheqd:testnet:d37eba59-513d-42d3-8f9f-d1df0548b675'
-    const indyDid = `did:indy:${indyNetworkConfig.indyNamespace}:${unqualifiedIndyDid}`
 
-    const did = registry === RegistryOptions.indy ? indyDid : cheqdDid
+    const did = cheqdDid
     await this.agent.dids.import({
       did,
       overwrite: true,
@@ -141,7 +135,7 @@ export class Issuer extends BaseAgent {
       issuerId: this.anonCredsIssuerId,
     }
     this.printSchema(schemaTemplate.name, schemaTemplate.version, schemaTemplate.attrNames)
-    this.ui.updateBottomBar(greenText('\nRegistering schema...\n', false))
+    console.log(greenText('\nRegistering schema...\n', false))
 
     const { schemaState } = await this.agent.modules.anoncreds.registerSchema<IndyVdrRegisterSchemaOptions>({
       schema: schemaTemplate,
@@ -156,7 +150,7 @@ export class Issuer extends BaseAgent {
         `Error registering schema: ${schemaState.state === 'failed' ? schemaState.reason : 'Not Finished'}`
       )
     }
-    this.ui.updateBottomBar('\nSchema registered!\n')
+    console.log('\nSchema registered!\n')
     return schemaState
   }
 
@@ -165,7 +159,7 @@ export class Issuer extends BaseAgent {
       throw new Error(redText('Missing anoncreds issuerId'))
     }
 
-    this.ui.updateBottomBar('\nRegistering credential definition...\n')
+    console.log('\nRegistering credential definition...\n')
     const { credentialDefinitionState } =
       await this.agent.modules.anoncreds.registerCredentialDefinition<IndyVdrRegisterCredentialDefinitionOptions>({
         credentialDefinition: {
@@ -188,7 +182,7 @@ export class Issuer extends BaseAgent {
     }
 
     this.credentialDefinition = credentialDefinitionState
-    this.ui.updateBottomBar('\nCredential definition registered!!\n')
+    console.log('\nCredential definition registered!!\n')
     return this.credentialDefinition
   }
 
@@ -197,7 +191,7 @@ export class Issuer extends BaseAgent {
     const credentialDefinition = await this.registerCredentialDefinition(schema.schemaId)
     const connectionRecord = await this.getConnectionRecord()
 
-    this.ui.updateBottomBar('\nSending credential offer...\n')
+    console.log('\nSending credential offer...\n')
 
     await this.agent.credentials.offerCredential({
       connectionId: connectionRecord.id,
@@ -222,13 +216,13 @@ export class Issuer extends BaseAgent {
         },
       },
     })
-    this.ui.updateBottomBar(
+    console.log(
       `\nCredential offer sent!\n\nGo to the Alice agent to accept the credential offer\n\n${Color.Reset}`
     )
   }
 
   private async printProofFlow(print: string) {
-    this.ui.updateBottomBar(print)
+    console.log(print)
     await new Promise((f) => setTimeout(f, 2000))
   }
 
@@ -264,7 +258,7 @@ export class Issuer extends BaseAgent {
         },
       },
     })
-    this.ui.updateBottomBar(
+    console.log(
       `\nProof request sent!\n\nGo to the Alice agent to accept the proof request\n\n${Color.Reset}`
     )
   }
