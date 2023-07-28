@@ -1,10 +1,15 @@
 import { Issuer } from "../Issuer";
 
-let issuer!: Issuer;
+
+let issuer: Issuer;
+export const InitIssuer = async () => {
+    issuer = await Issuer.build();
+}
 
 export const invitationLink = async () => {
     try {
-        issuer = await Issuer.build();
+        if(!issuer) {await InitIssuer()}
+        
         const invite = await issuer.printConnectionInvite();
         return invite
     } catch (err) {
