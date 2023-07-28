@@ -53,9 +53,9 @@
     "@cosmjs/utils": "npm:@cosmjs-rn/utils@^0.27.1",
     "@cosmjs/proto-signing": "npm:@cosmjs-rn/proto-signing@^0.27.1",
     "@cosmjs/crypto": "npm:@cosmjs-rn/crypto@^0.27.1"
-  },   
+  },
   "resolutions": {
-    "@types/node": "^16.11.7"
+    "@types/node": "^16.11.7",
+    "ref-napi": "npm:@2060.io/ref-napi"
   }
-
 }
