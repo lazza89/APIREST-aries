@@ -4,7 +4,7 @@ import { UniversityCredentialsContainer } from "Utils";
 let issuer: Issuer;
 export const InitIssuer = async () => {
   issuer = await Issuer.build();
-  await issuer.importDid();
+  //await issuer.importDid();
 };
 
 export const invitationLink = async () => {

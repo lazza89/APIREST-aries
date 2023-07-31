@@ -79,6 +79,8 @@ export class Issuer extends BaseAgent {
       },
     });
 
+    this.anonCredsIssuerId = did.didState.did;
+
     //console.log(await this.agent.dids.getCreatedDids());
     console.log("did: " + did.didState.did);
     console.log(
@@ -182,7 +184,7 @@ export class Issuer extends BaseAgent {
       throw new Error(redText("Missing anoncreds issuerId"));
     }
     const schemaTemplate = {
-      name: "Faber College" + utils.uuid(),
+      name: "College",
       version: "1.0.0",
       attrNames: ["name", "degree", "date"],
       issuerId: this.anonCredsIssuerId,
@@ -266,7 +268,7 @@ export class Issuer extends BaseAgent {
       credential._date,
     ]);
 
-    await this.agent.credentials.offerCredential({
+    const cred = await this.agent.credentials.offerCredential({
       connectionId: connectionRecord.id,
       protocolVersion: "v2",
       credentialFormats: {
@@ -292,6 +294,7 @@ export class Issuer extends BaseAgent {
     console.log(
       `\nCredential offer sent!\n\nGo to the holder agent to accept the credential offer\n\n${Color.Reset}`
     );
+    console.log("credential: ", cred);
   }
 
   private async printProofFlow(print: string) {
