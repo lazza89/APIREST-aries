@@ -1,21 +1,22 @@
 import express from "express";
 import {
-    getInvitationLink,
-    getCredential,
-    getProof,
+  getInvitationLink,
+  getCredential,
+  getProof,
+  createDidModule,
 } from "../controllers/controllers";
 
 const router = express.Router();
 
 router.get("/invitationLink", getInvitationLink);
 
-router.get("/credential", getCredential);
+router.post("/credential", getCredential);
 
 router.get("/proof", getProof);
 
-/*
-router.post("/", addPet);
+router.get("/createDid", createDidModule);
 
+/*
 router.delete("/:id", deletePet);
 
 export default router;
