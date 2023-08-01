@@ -1,0 +1,10 @@
+{
+  "cheqd": {
+    "demo": {
+      "did": "did:cheqd:testnet:d37eba59-513d-42d3-8f9f-d1df0548b675"
+    },
+    "release": {
+      "did": "did:cheqd:testnet:8a8ec280-31f2-4861-9aa2-2d3ff93e084f"
+    }
+  }
+}

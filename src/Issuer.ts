@@ -40,11 +40,9 @@ export class Issuer extends BaseAgent {
     return faber;
   }
 
-  public async importDid() {
+  public async importDid(cheqdDid: string) {
     // NOTE: we assume the did is already registered on the ledger, we just store the private key in the wallet
     // and store the existing did in the wallet
-    const cheqdDid = "did:cheqd:testnet:d37eba59-513d-42d3-8f9f-d1df0548b675";
-
     const did = cheqdDid;
     await this.agent.dids.import({
       did,
@@ -81,14 +79,7 @@ export class Issuer extends BaseAgent {
 
     this.anonCredsIssuerId = did.didState.did;
 
-    //console.log(await this.agent.dids.getCreatedDids());
-    console.log("did: " + did.didState.did);
-    console.log(
-      await this.agent.dids.getCreatedDids({
-        method: "cheqd",
-        did: did.didState.did,
-      })
-    );
+    return did;
   }
 
   private async getConnectionRecord() {
@@ -130,7 +121,7 @@ export class Issuer extends BaseAgent {
         // Timeout of 20 seconds
         const timeoutId = setTimeout(
           () => reject(new Error(redText(Output.MissingConnectionRecord))),
-          20000
+          20000000
         );
 
         // Start listener
@@ -260,6 +251,11 @@ export class Issuer extends BaseAgent {
       schema.schemaId
     );
     const connectionRecord = await this.getConnectionRecord();
+
+    console.log(
+      "credentialDefinition: ",
+      credentialDefinition.credentialDefinitionId
+    );
 
     console.log("\nSending credential offer...\n");
     this.printSchema("Faber College", "v1.0.0", [

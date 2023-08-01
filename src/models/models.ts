@@ -1,19 +1,19 @@
-import { Issuer } from "../Issuer";
+import { IssuerController } from "../IssuerController";
 import { UniversityCredentialsContainer } from "Utils";
 
-let issuer: Issuer;
-export const InitIssuer = async () => {
-  issuer = await Issuer.build();
-  //await issuer.importDid();
+let issuerController: IssuerController;
+export const InitIssuerController = async () => {
+  issuerController = new IssuerController();
+  await issuerController.init();
 };
 
 export const invitationLink = async () => {
   try {
-    if (!issuer) {
-      await InitIssuer();
+    if (!issuerController) {
+      await InitIssuerController();
     }
 
-    const invite = await issuer.printConnectionInvite();
+    const invite = await issuerController.invitationLink();
     return invite;
   } catch (err) {
     console.log("Error", err);
@@ -22,10 +22,10 @@ export const invitationLink = async () => {
 
 export const acceptConn = async () => {
   try {
-    if (!issuer) {
+    if (!issuerController) {
       throw new Error("Issuer not initialized");
     }
-    await issuer.waitForConnection();
+    await issuerController.waitForConnection();
     return "Connection established";
   } catch (err) {
     console.log("Error", err);
@@ -36,10 +36,10 @@ export const credential = async (
   credential: UniversityCredentialsContainer
 ) => {
   try {
-    if (!issuer) {
+    if (!issuerController) {
       throw new Error("Issuer not initialized");
     }
-    await issuer.issueCredential(credential);
+    await issuerController.issueCredential(credential);
     return "Credential issued";
   } catch (err) {
     console.log("Error", err);
@@ -48,10 +48,10 @@ export const credential = async (
 
 export const proof = async () => {
   try {
-    if (!issuer) {
+    if (!issuerController) {
       throw new Error("Issuer not initialized");
     }
-    await issuer.sendProofRequest();
+    await issuerController.sendProofRequest();
     return "Proof request sent";
   } catch (err) {
     console.log("Error", err);
@@ -60,10 +60,10 @@ export const proof = async () => {
 
 export const createDid = async () => {
   try {
-    if (!issuer) {
+    if (!issuerController) {
       throw new Error("Issuer not initialized");
     }
-    await issuer.createDid();
+    await issuerController.createDid();
     return "DID created";
   } catch (err) {
     console.log("Error", err);
