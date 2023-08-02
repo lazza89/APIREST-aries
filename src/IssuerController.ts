@@ -72,8 +72,9 @@ export class IssuerController {
     }
 
     const schemaState = await this.issuer.registerCustomSchema(schema);
-    console.log("Schema created: " + schemaState.schemaId);
-    await this.writeOnSchemaJSON(schemaState, schemaState.schemaId);
+    await this.writeOnSchemaJSON(schemaState.schema, schemaState.schemaId);
+
+    return "Schema created: " + schemaState.schemaId;
   }
 
   private async writeOnSchemaJSON(schema: any, schemaId: string) {
