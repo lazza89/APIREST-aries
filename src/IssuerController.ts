@@ -1,3 +1,4 @@
+import { redText } from "./OutputClass";
 import { Issuer } from "./Issuer";
 import {
   readJsonFile,
@@ -45,30 +46,42 @@ export class IssuerController {
 
   public async createSchema(schema: any) {
     console.log(schema);
-    const jsonFile = readJsonFile(path.resolve(__dirname, "schema.json"));
 
-    const ret2 = await this.issuer.agent.modules.anoncreds.getCreatedSchemas({
-      schemaName: "UNIPD",
-    });
+    const schemaLedger =
+      await this.issuer.agent.modules.anoncreds.getCreatedSchemas({
+        schemaName: `${schema.name}`,
+        schemaVersion: `${schema.version}`,
+      });
 
-    console.log(ret2);
+    if (schemaLedger.length == 1) {
+      console.log("Schema already created, founded in ledger \n");
+      console.log(schemaLedger[0]);
+      await this.writeOnSchemaJSON(
+        schemaLedger[0].schema,
+        schemaLedger[0].schemaId
+      );
+      return "Schema already created, founded in ledger, saving in schema.json";
+    }
 
-    /*
-    const ret = await this.issuer.agent.modules.anoncreds.getSchema(
-      "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/a5dac974-90c6-4cb0-8b0c-d3f83effb0d0"
-    );
+    if (schemaLedger.length > 1) {
+      console.log(
+        "Schema already created, founded in ledger, but more than one? \n"
+      );
 
-    console.log(ret);
+      return "Schema already created, founded in ledger, but more than one?, i don't like it!";
+    }
 
-    /*
     const schemaState = await this.issuer.registerCustomSchema(schema);
     console.log("Schema created: " + schemaState.schemaId);
+    await this.writeOnSchemaJSON(schemaState, schemaState.schemaId);
+  }
 
-    jsonFile.schemas[`${schema.name}-${schema.version}`] = {
-      schema,
-      schemaId: schemaState.schemaId,
+  private async writeOnSchemaJSON(schema: any, schemaId: string) {
+    const jsonFile = readJsonFile(path.resolve(__dirname, "schema.json"));
+    jsonFile.anoncreds[schema.name + "-" + schema.version] = {
+      schemaState: schema,
+      schemaId: schemaId,
     };
     writeJsonFile(path.resolve(__dirname, "schema.json"), jsonFile);
-    */
   }
 }

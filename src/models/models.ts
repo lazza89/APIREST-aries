@@ -75,9 +75,9 @@ export const newSchema = async (schema: any) => {
     if (!issuerController) {
       throw new Error("Issuer not initialized");
     }
-    await issuerController.createSchema(schema);
+    const ret = await issuerController.createSchema(schema);
 
-    return "schema created";
+    return ret;
   } catch (err) {
     console.log("Error", err);
   }

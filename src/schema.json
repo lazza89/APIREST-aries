@@ -1,16 +1,22 @@
 {
-  "schemas": {
-    "UNIPD-1.0.0": {
-      "schema": {
-        "name": "UNIPD",
-        "version": "1.0.0",
-        "attrNames": [
-          "name",
-          "degree",
-          "data"
-        ]
+  "anoncreds": {
+    "UNIPDDD-1.0.1": {
+      "schemaState": {
+        "name": "UNIPDDD",
+        "version": "1.0.1",
+        "attrNames": ["name", "degree", "data", "ciao"],
+        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
       },
-      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/a5dac974-90c6-4cb0-8b0c-d3f83effb0d0"
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/ebbf64c4-433a-4c7f-b23b-c6cfa32c32e8"
+    },
+    "UNIPDDD-1.0.0": {
+      "schemaState": {
+        "name": "UNIPDDD",
+        "version": "1.0.0",
+        "attrNames": ["name", "degree", "data"],
+        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
+      },
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/906ca887-82e0-4398-84cc-2fc13c19f3b5"
     }
   }
 }
