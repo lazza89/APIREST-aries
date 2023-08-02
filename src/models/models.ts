@@ -69,3 +69,16 @@ export const createDid = async () => {
     console.log("Error", err);
   }
 };
+
+export const newSchema = async (schema: any) => {
+  try {
+    if (!issuerController) {
+      throw new Error("Issuer not initialized");
+    }
+    await issuerController.createSchema(schema);
+
+    return "schema created";
+  } catch (err) {
+    console.log("Error", err);
+  }
+};

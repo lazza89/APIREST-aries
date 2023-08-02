@@ -20,7 +20,7 @@ export class UniversityCredentialsContainer {
   public _date: string;
 }
 
-export function readJsonFile(filename: string): CheqdData | null {
+export function readJsonFile(filename: string): any | null {
   try {
     if (!fs.existsSync(filename)) {
       console.error("File not found:", filename);
@@ -30,7 +30,7 @@ export function readJsonFile(filename: string): CheqdData | null {
     const rawData = fs.readFileSync(filename, "utf-8");
     const jsonData = JSON.parse(rawData);
 
-    if (!jsonData || !jsonData.cheqd || !jsonData.cheqd.demo) {
+    if (!jsonData) {
       console.error("Invalid JSON data format:", jsonData);
       return null;
     }

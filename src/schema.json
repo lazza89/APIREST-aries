@@ -1,0 +1,16 @@
+{
+  "schemas": {
+    "UNIPD-1.0.0": {
+      "schema": {
+        "name": "UNIPD",
+        "version": "1.0.0",
+        "attrNames": [
+          "name",
+          "degree",
+          "data"
+        ]
+      },
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/a5dac974-90c6-4cb0-8b0c-d3f83effb0d0"
+    }
+  }
+}

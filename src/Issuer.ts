@@ -163,11 +163,52 @@ export class Issuer extends BaseAgent {
     console.log(`\n\nThe credential definition will look like this:\n`);
     console.log(purpleText(`Name: ${Color.Reset}${name}`));
     console.log(purpleText(`Version: ${Color.Reset}${version}`));
-    console.log(
-      purpleText(
-        `Attributes: ${Color.Reset}${attributes[0]}, ${attributes[1]}, ${attributes[2]}\n`
-      )
+    console.log(purpleText("Attributes: "));
+    for (const attrName of attributes) {
+      console.log(attrName);
+    }
+  }
+
+  public async registerCustomSchema(schema: any) {
+    if (!this.anonCredsIssuerId) {
+      throw new Error(redText("Missing anoncreds issuerId"));
+    }
+
+    const schemaTemplate = {
+      name: schema.name,
+      version: schema.version,
+      attrNames: schema.attrNames,
+      issuerId: this.anonCredsIssuerId,
+    };
+
+    this.printSchema(
+      schemaTemplate.name,
+      schemaTemplate.version,
+      schemaTemplate.attrNames
     );
+
+    console.log(greenText("\nRegistering schema...\n", false));
+
+    const { schemaState } =
+      await this.agent.modules.anoncreds.registerSchema<IndyVdrRegisterSchemaOptions>(
+        {
+          schema: schemaTemplate,
+          options: {
+            endorserMode: "internal",
+            endorserDid: this.anonCredsIssuerId,
+          },
+        }
+      );
+
+    if (schemaState.state !== "finished") {
+      throw new Error(
+        `Error registering schema: ${
+          schemaState.state === "failed" ? schemaState.reason : "Not Finished"
+        }`
+      );
+    }
+    console.log("\nSchema registered!\n");
+    return schemaState;
   }
 
   private async registerSchema() {
