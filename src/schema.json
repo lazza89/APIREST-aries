@@ -4,7 +4,12 @@
       "schemaState": {
         "name": "UNIPDDD",
         "version": "1.0.1",
-        "attrNames": ["name", "degree", "data", "ciao"],
+        "attrNames": [
+          "name",
+          "degree",
+          "data",
+          "ciao"
+        ],
         "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
       },
       "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/ebbf64c4-433a-4c7f-b23b-c6cfa32c32e8"
@@ -13,10 +18,40 @@
       "schemaState": {
         "name": "UNIPDDD",
         "version": "1.0.0",
-        "attrNames": ["name", "degree", "data"],
+        "attrNames": [
+          "name",
+          "degree",
+          "data"
+        ],
         "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
       },
       "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/906ca887-82e0-4398-84cc-2fc13c19f3b5"
+    },
+    "ciao-1.0.0": {
+      "schemaState": {
+        "name": "ciao",
+        "version": "1.0.0",
+        "attrNames": [
+          "name",
+          "degree",
+          "data"
+        ],
+        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
+      },
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/c5bdaf66-eacf-4e41-927e-c74abec216f7"
+    },
+    "ciao-1.0.1": {
+      "schemaState": {
+        "name": "ciao",
+        "version": "1.0.1",
+        "attrNames": [
+          "name",
+          "degree",
+          "date"
+        ],
+        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
+      },
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/2559e28b-05d4-4813-b8a4-919a8e2cc52e"
     }
   }
 }

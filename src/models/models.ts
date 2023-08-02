@@ -32,15 +32,13 @@ export const acceptConn = async () => {
   }
 };
 
-export const credential = async (
-  credential: UniversityCredentialsContainer
-) => {
+export const credential = async (credential: any) => {
   try {
     if (!issuerController) {
       throw new Error("Issuer not initialized");
     }
-    await issuerController.issueCredential(credential);
-    return "Credential issued";
+    const ret = await issuerController.issueCredential(credential);
+    return ret;
   } catch (err) {
     console.log("Error", err);
   }

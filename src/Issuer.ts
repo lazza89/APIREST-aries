@@ -2,6 +2,7 @@ import type { RegisterCredentialDefinitionReturnStateFinished } from "@aries-fra
 import type {
   ConnectionRecord,
   ConnectionStateChangedEvent,
+  CredentialPreviewAttributeOptions,
 } from "@aries-framework/core";
 import type {
   IndyVdrRegisterSchemaOptions,
@@ -23,6 +24,11 @@ import { CheqdDidCreateOptions } from "@aries-framework/cheqd";
 
 export enum RegistryOptions {
   cheqd = "did:cheqd",
+}
+
+interface Attribute {
+  name: string;
+  value: any;
 }
 
 export class Issuer extends BaseAgent {
@@ -286,7 +292,44 @@ export class Issuer extends BaseAgent {
     return this.credentialDefinition;
   }
 
-  public async issueCredential(credential: UniversityCredentialsContainer) {
+  public async customIssueCredential(credential: any, schemaId: any) {
+    const attributes: CredentialPreviewAttributeOptions[] = [];
+
+    for (const attributeName in credential.attributes) {
+      if (
+        Object.prototype.hasOwnProperty.call(
+          credential.attributes,
+          attributeName
+        )
+      ) {
+        const attributeValue = credential.attributes[attributeName];
+        console.log(`${attributeName}: ${attributeValue}`);
+        attributes.push({ name: attributeName, value: attributeValue });
+      }
+    }
+
+    const connectionRecord = await this.getConnectionRecord();
+    const credentialDefinition = await this.registerCredentialDefinition(
+      schemaId
+    );
+
+    const cred = await this.agent.credentials.offerCredential({
+      connectionId: connectionRecord.id,
+      protocolVersion: "v2",
+      credentialFormats: {
+        anoncreds: {
+          attributes: attributes,
+          credentialDefinitionId: credentialDefinition.credentialDefinitionId,
+        },
+      },
+    });
+    console.log(
+      `\nCredential offer sent!\n\nGo to the holder agent to accept the credential offer\n\n${Color.Reset}`
+    );
+    console.log("credential: ", cred);
+  }
+
+  public async issueCredential(credential: any) {
     const schema = await this.registerSchema();
     const credentialDefinition = await this.registerCredentialDefinition(
       schema.schemaId
@@ -297,13 +340,6 @@ export class Issuer extends BaseAgent {
       "credentialDefinition: ",
       credentialDefinition.credentialDefinitionId
     );
-
-    console.log("\nSending credential offer...\n");
-    this.printSchema("Faber College", "v1.0.0", [
-      credential._name,
-      credential._degree,
-      credential._date,
-    ]);
 
     const cred = await this.agent.credentials.offerCredential({
       connectionId: connectionRecord.id,

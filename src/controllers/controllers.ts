@@ -21,13 +21,7 @@ export const getInvitationLink = async (req: any, res: any) => {
 
 export const getCredential = async (req: any, res: any) => {
   try {
-    const resp = await credential(
-      new UniversityCredentialsContainer(
-        req.body.name,
-        req.body.degree,
-        req.body.date
-      )
-    );
+    const resp = await credential(req.body);
     res.status(200).json(resp);
   } catch (err) {
     res.status(500).send(err);

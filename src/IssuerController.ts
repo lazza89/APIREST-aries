@@ -5,6 +5,7 @@ import {
   writeJsonFile,
   UniversityCredentialsContainer,
 } from "./Utils";
+import { json } from "body-parser";
 const path = require("path");
 
 export class IssuerController {
@@ -24,8 +25,22 @@ export class IssuerController {
     await this.issuer.waitForConnection();
   }
 
-  public async issueCredential(credential: UniversityCredentialsContainer) {
-    await this.issuer.issueCredential(credential);
+  public async issueCredential(credential: any) {
+    const schemaLedger =
+      await this.issuer.agent.modules.anoncreds.getCreatedSchemas({
+        schemaName: `${credential.schema}`,
+        schemaVersion: `${credential.schemaVersion}`,
+      });
+
+    if (schemaLedger.length == 0) {
+      console.log(redText("Schema not found"));
+      return "Schema not found";
+    }
+
+    await this.issuer.customIssueCredential(
+      credential,
+      schemaLedger[0].schemaId
+    );
   }
 
   public async sendProofRequest() {
