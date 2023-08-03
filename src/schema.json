@@ -1,75 +1,24 @@
 {
   "anoncreds": {
-    "UNIPDDD-1.0.1": {
-      "schemaState": {
-        "name": "UNIPDDD",
-        "version": "1.0.1",
-        "attrNames": [
-          "name",
-          "degree",
-          "data",
-          "ciao"
-        ],
-        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
-      },
-      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/ebbf64c4-433a-4c7f-b23b-c6cfa32c32e8"
-    },
-    "UNIPDDD-1.0.0": {
-      "schemaState": {
-        "name": "UNIPDDD",
-        "version": "1.0.0",
-        "attrNames": [
-          "name",
-          "degree",
-          "data"
-        ],
-        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
-      },
-      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/906ca887-82e0-4398-84cc-2fc13c19f3b5"
-    },
-    "ciao-1.0.0": {
-      "schemaState": {
-        "name": "ciao",
-        "version": "1.0.0",
-        "attrNames": [
-          "name",
-          "degree",
-          "data"
-        ],
-        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
-      },
-      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/c5bdaf66-eacf-4e41-927e-c74abec216f7"
-    },
-    "ciao-1.0.1": {
-      "schemaState": {
-        "name": "ciao",
-        "version": "1.0.1",
-        "attrNames": [
-          "name",
-          "degree",
-          "date"
-        ],
-        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
-      },
-      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/2559e28b-05d4-4813-b8a4-919a8e2cc52e"
-    },
-    "patente-1.0.0": {
+    "patente-1.0.7": {
       "schemaState": {
         "name": "patente",
-        "version": "1.0.0",
+        "version": "1.0.7",
         "attrNames": [
           "name",
           "surname",
-          "date"
+          "date",
+          "expireDate"
         ],
         "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
       },
-      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/71568299-ba7e-40c0-b805-43c19586f81c"
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/a04b330b-9142-45b5-9f2c-9215d4475a67",
+      "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/359a726e-11e0-4631-b16d-e811c68e5b67"
     },
-    "patente-1.0.1": {
+    "patente-1.0.8": {
       "schemaState": {
         "name": "patente",
-        "version": "1.0.1",
+        "version": "1.0.8",
         "attrNames": [
           "name",
           "surname",
@@ -78,82 +27,13 @@
         ],
         "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
       },
-      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/7e4cab25-ec90-4e69-b3de-e2c85d5dc080"
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/bd8a7a05-7991-4dd0-b9ac-ecd6736f2403",
+      "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/825d6b34-325b-455b-b5b1-98cdb7f9d307"
     },
-    "patentee-1.0.1": {
-      "schemaState": {
-        "name": "patentee",
-        "version": "1.0.1",
-        "attrNames": [
-          "name",
-          "surname",
-          "date",
-          "expireDate"
-        ],
-        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
-      },
-      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/bc9c70aa-e521-4d21-afd1-d6ad2ebed3f3"
-    },
-    "patenteee-1.0.1": {
-      "schemaState": {
-        "name": "patenteee",
-        "version": "1.0.1",
-        "attrNames": [
-          "name",
-          "surname",
-          "date",
-          "expireDate"
-        ],
-        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
-      },
-      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/55c3c820-7308-423f-b1f0-1f6f406f43ef"
-    },
-    "patenteeee-1.0.1": {
-      "schemaState": {
-        "name": "patenteeee",
-        "version": "1.0.1",
-        "attrNames": [
-          "name",
-          "surname",
-          "date",
-          "expireDate"
-        ],
-        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
-      },
-      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/c37ad5c0-dea6-49be-92a4-9f5252022cfc"
-    },
-    "patenteeee-1.0.2": {
-      "schemaState": {
-        "name": "patenteeee",
-        "version": "1.0.2",
-        "attrNames": [
-          "name",
-          "surname",
-          "date",
-          "expireDate"
-        ],
-        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
-      },
-      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/56a77cd2-b00d-45e5-a570-3e2e4bdc3cc4"
-    },
-    "patenteeeee-1.0.2": {
-      "schemaState": {
-        "name": "patenteeeee",
-        "version": "1.0.2",
-        "attrNames": [
-          "name",
-          "surname",
-          "date",
-          "expireDate"
-        ],
-        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
-      },
-      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/dcc1824e-3710-4586-a1ea-2c6d291d6fdf"
-    },
-    "patente-1.0.3": {
+    "patente-1.0.12": {
       "schemaState": {
         "name": "patente",
-        "version": "1.0.3",
+        "version": "1.0.12",
         "attrNames": [
           "name",
           "surname",
@@ -162,7 +42,8 @@
         ],
         "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
       },
-      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/82eac5f9-7daa-40f3-8de1-011d9c654bdb"
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/a03aff88-3fc9-42ad-af0e-d637ab532723",
+      "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/712c7d45-53e5-40b3-8e0d-3b60851047a8"
     }
   }
 }
