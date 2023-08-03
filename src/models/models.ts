@@ -49,7 +49,7 @@ export const proof = async () => {
     if (!issuerController) {
       throw new Error("Issuer not initialized");
     }
-    await issuerController.sendProofRequest();
+    //await issuerController.sendProofRequest();
     return "Proof request sent";
   } catch (err) {
     console.log("Error", err);
@@ -73,7 +73,7 @@ export const newSchema = async (schema: any) => {
     if (!issuerController) {
       throw new Error("Issuer not initialized");
     }
-    const ret = await issuerController.createSchema(schema);
+    const ret = await issuerController.createSchemaAndCredDef(schema);
 
     return ret;
   } catch (err) {

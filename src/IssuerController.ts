@@ -4,15 +4,10 @@ import {
   readJsonFile,
   writeJsonFile,
   UniversityCredentialsContainer,
+  SchemaAndCredDefInLedger,
 } from "./Utils";
 import { json } from "body-parser";
 const path = require("path");
-
-enum SchemaAndCredDefInLedger {
-  NONE, //schema and credential definition not present
-  SCHEMA, //schema present, credential definition not present
-  SCHEMA_AND_CRED_DEF, //schema and credential definition present
-}
 
 export class IssuerController {
   private issuer: Issuer;
@@ -53,9 +48,11 @@ export class IssuerController {
     */
   }
 
+  /*
   public async sendProofRequest() {
     await this.issuer.sendProofRequest();
   }
+  */
 
   public async createDid() {
     console.log("Creating did...");
@@ -70,11 +67,16 @@ export class IssuerController {
   }
 
   //creating schema and credential definition, all saving in json files
-  public async createSchema(schema: any) {
+  public async createSchemaAndCredDef(schema: any) {
     console.log(schema);
 
     //check if schema and credential definition are already in ledger and return SchemaAndCredDefInLedger enum
-    const isPresent = await this.checkSchemaAndCredDefInLedger(schema);
+    const [schemaId, credDefId, isPresent] =
+      await this.issuer.checkSchemaAndCredDefInLedger(schema);
+
+    console.log("isPresent: " + isPresent);
+    console.log("schemaId: " + schemaId);
+    console.log("credDefId: " + credDefId);
 
     switch (isPresent) {
       case SchemaAndCredDefInLedger.NONE:
@@ -123,40 +125,6 @@ export class IssuerController {
       default:
         return "error creating schema and credential definition";
     }
-  }
-
-  private async checkSchemaAndCredDefInLedger(
-    schema: any
-  ): Promise<SchemaAndCredDefInLedger> {
-    const schemaLedger =
-      await this.issuer.agent.modules.anoncreds.getCreatedSchemas({
-        schemaName: `${schema.name}`,
-        schemaVersion: `${schema.version}`,
-      });
-    if (schemaLedger.length != 0) {
-      console.log("Schema already created, founded in ledger \n");
-      console.log("cheching credential definition...");
-      const credDefinition =
-        await this.issuer.agent.modules.anoncreds.getCreatedCredentialDefinitions(
-          { schemaId: schemaLedger[0].schemaId }
-        );
-      if (credDefinition.length != 0) {
-        console.log(
-          "Credential definition already created, founded in ledger \n"
-        );
-        console.log("Schema id: ", schemaLedger[0].schemaId, "\n");
-        console.log(
-          "Credential definition id: ",
-          credDefinition[0].credentialDefinitionId,
-          "\n"
-        );
-
-        return SchemaAndCredDefInLedger.SCHEMA_AND_CRED_DEF;
-      }
-      return SchemaAndCredDefInLedger.SCHEMA;
-    }
-
-    return SchemaAndCredDefInLedger.NONE;
   }
 
   private async writeOnJSON(schema: any, credentialDefId: any) {

@@ -19,7 +19,10 @@ import {
 
 import { BaseAgent } from "./BaseAgent";
 import { Color, Output, greenText, purpleText, redText } from "./OutputClass";
-import { UniversityCredentialsContainer } from "./Utils";
+import {
+  UniversityCredentialsContainer,
+  SchemaAndCredDefInLedger,
+} from "./Utils";
 import { CheqdDidCreateOptions } from "@aries-framework/cheqd";
 
 export enum RegistryOptions {
@@ -297,11 +300,48 @@ export class Issuer extends BaseAgent {
     return connectionRecord.id;
   }
 
-  public async registerAndGetCredentialDefinition(schemaId: string) {
-    const credentialDefinition = await this.registerCredentialDefinition(
-      schemaId
-    );
-    return credentialDefinition.credentialDefinitionId;
+  private async getCredentialDefinition(schemaId: string) {
+    //return credentialDefinition.credentialDefinitionId;
+  }
+
+  public async checkSchemaAndCredDefInLedger(
+    schema: any
+  ): Promise<[string, string, SchemaAndCredDefInLedger]> {
+    let schemaIdTmp = "";
+    let credDefIdTmp = "";
+
+    const schemaLedger = await this.agent.modules.anoncreds.getCreatedSchemas({
+      schemaName: `${schema.name}`,
+      schemaVersion: `${schema.version}`,
+    });
+    if (schemaLedger.length != 0) {
+      console.log("Schema already created, founded in ledger \n");
+      console.log("cheching credential definition...");
+
+      schemaIdTmp = schemaLedger[0].schemaId;
+      const credDefinition =
+        await this.agent.modules.anoncreds.getCreatedCredentialDefinitions({
+          schemaId: schemaIdTmp,
+        });
+
+      if (credDefinition.length != 0) {
+        credDefIdTmp = credDefinition[0].credentialDefinitionId;
+        console.log(
+          "Credential definition already created, founded in ledger \n"
+        );
+        console.log("Schema id: ", schemaIdTmp, "\n");
+        console.log("Credential definition id: ", credDefIdTmp, "\n");
+
+        return [
+          schemaIdTmp,
+          credDefIdTmp,
+          SchemaAndCredDefInLedger.SCHEMA_AND_CRED_DEF,
+        ];
+      }
+      return [schemaIdTmp, credDefIdTmp, SchemaAndCredDefInLedger.SCHEMA];
+    }
+
+    return [schemaIdTmp, credDefIdTmp, SchemaAndCredDefInLedger.NONE];
   }
 
   public async customIssueCredential(

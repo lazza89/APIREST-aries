@@ -20,6 +20,12 @@ export class UniversityCredentialsContainer {
   public _date: string;
 }
 
+export enum SchemaAndCredDefInLedger {
+  NONE, //schema and credential definition not present
+  SCHEMA, //schema present, credential definition not present
+  SCHEMA_AND_CRED_DEF, //schema and credential definition present
+}
+
 export function readJsonFile(filename: string): any | null {
   try {
     if (!fs.existsSync(filename)) {

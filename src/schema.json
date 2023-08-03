@@ -44,6 +44,21 @@
       },
       "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/a03aff88-3fc9-42ad-af0e-d637ab532723",
       "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/712c7d45-53e5-40b3-8e0d-3b60851047a8"
+    },
+    "patente-1.0.13": {
+      "schemaState": {
+        "name": "patente",
+        "version": "1.0.13",
+        "attrNames": [
+          "name",
+          "surname",
+          "date",
+          "expireDate"
+        ],
+        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
+      },
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/0c69aa47-8e84-4348-96df-b9c208d92f1d",
+      "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/0e748d40-39c6-4cac-9bb3-46e5b228663e"
     }
   }
 }
