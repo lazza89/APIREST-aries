@@ -37,10 +37,14 @@ export class IssuerController {
       return "Schema not found";
     }
 
+    const connectionId = await this.issuer.getConnectionId();
+
+    /*
     await this.issuer.customIssueCredential(
       credential,
       schemaLedger[0].schemaId
     );
+    */
   }
 
   public async sendProofRequest() {
@@ -59,6 +63,7 @@ export class IssuerController {
     console.log("did: " + did.didState.did);
   }
 
+  //creating schema and credential definition, all saving in json files
   public async createSchema(schema: any) {
     console.log(schema);
 
@@ -86,8 +91,22 @@ export class IssuerController {
       return "Schema already created, founded in ledger, but more than one?, i don't like it!";
     }
 
+    console.log("Creating schema...");
     const schemaState = await this.issuer.registerCustomSchema(schema);
     await this.writeOnSchemaJSON(schemaState.schema, schemaState.schemaId);
+    console.log("Schema created: " + schemaState.schemaId);
+
+    const credDefinition = await this.issuer.registerCredentialDefinition(
+      schemaState.schemaId
+    );
+
+    await this.writeOnCredentialJSON(
+      credDefinition.credentialDefinitionId,
+      schema
+    );
+
+    //await this.writeOnCredentialJSON(
+    console.log("Credential definition registered");
 
     return "Schema created: " + schemaState.schemaId;
   }
@@ -99,5 +118,18 @@ export class IssuerController {
       schemaId: schemaId,
     };
     writeJsonFile(path.resolve(__dirname, "schema.json"), jsonFile);
+  }
+
+  private writeOnCredentialJSON(credentialDefId: string, schema: any) {
+    const jsonFile = readJsonFile(
+      path.resolve(__dirname, "credentialDefinition.json")
+    );
+    jsonFile.anoncreds[schema.name + "-" + schema.version] = {
+      credentialDefinitionId: credentialDefId,
+    };
+    writeJsonFile(
+      path.resolve(__dirname, "credentialDefinition.json"),
+      jsonFile
+    );
   }
 }

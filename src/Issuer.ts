@@ -256,7 +256,7 @@ export class Issuer extends BaseAgent {
     return schemaState;
   }
 
-  private async registerCredentialDefinition(schemaId: string) {
+  public async registerCredentialDefinition(schemaId: string) {
     if (!this.anonCredsIssuerId) {
       throw new Error(redText("Missing anoncreds issuerId"));
     }
@@ -292,7 +292,23 @@ export class Issuer extends BaseAgent {
     return this.credentialDefinition;
   }
 
-  public async customIssueCredential(credential: any, schemaId: any) {
+  public async getConnectionId() {
+    const connectionRecord = await this.getConnectionRecord();
+    return connectionRecord.id;
+  }
+
+  public async registerAndGetCredentialDefinition(schemaId: string) {
+    const credentialDefinition = await this.registerCredentialDefinition(
+      schemaId
+    );
+    return credentialDefinition.credentialDefinitionId;
+  }
+
+  public async customIssueCredential(
+    credential: any,
+    connectionId: string,
+    credentialDefinitionId: string
+  ) {
     const attributes: CredentialPreviewAttributeOptions[] = [];
 
     for (const attributeName in credential.attributes) {
@@ -308,18 +324,13 @@ export class Issuer extends BaseAgent {
       }
     }
 
-    const connectionRecord = await this.getConnectionRecord();
-    const credentialDefinition = await this.registerCredentialDefinition(
-      schemaId
-    );
-
     const cred = await this.agent.credentials.offerCredential({
-      connectionId: connectionRecord.id,
+      connectionId: connectionId,
       protocolVersion: "v2",
       credentialFormats: {
         anoncreds: {
           attributes: attributes,
-          credentialDefinitionId: credentialDefinition.credentialDefinitionId,
+          credentialDefinitionId: credentialDefinitionId,
         },
       },
     });
