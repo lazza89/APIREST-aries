@@ -48,8 +48,8 @@ export class IssuerController {
     let credentialDefinitionId: string[] = [];
     let proofAttribute: any = {};
 
+    let n = 1;
     for (const key in attribute) {
-      let n = 1;
       if (Object.prototype.hasOwnProperty.call(attribute, key)) {
         const proof = attribute[key];
         const schema = { name: proof.name, version: proof.version };
@@ -72,7 +72,7 @@ export class IssuerController {
       n++;
     }
 
-    console.log(JSON.stringify(proofAttribute));
+    console.log(proofAttribute);
 
     await this.issuer.sendProofRequest(proofAttribute);
   }
