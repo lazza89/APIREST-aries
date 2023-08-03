@@ -44,12 +44,12 @@ export const credential = async (credential: any) => {
   }
 };
 
-export const proof = async () => {
+export const proof = async (attribute: any) => {
   try {
     if (!issuerController) {
       throw new Error("Issuer not initialized");
     }
-    //await issuerController.sendProofRequest();
+    await issuerController.sendProofRequest(attribute);
     return "Proof request sent";
   } catch (err) {
     console.log("Error", err);

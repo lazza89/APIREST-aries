@@ -444,9 +444,8 @@ export class Issuer extends BaseAgent {
     return proofAttribute;
   }
 
-  public async sendProofRequest() {
+  public async sendProofRequest(proofAttribute: any) {
     const connectionRecord = await this.getConnectionRecord();
-    const proofAttribute = await this.newProofAttribute();
     await this.printProofFlow(greenText("\nRequesting proof...\n", false));
 
     await this.agent.proofs.requestProof({

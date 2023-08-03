@@ -30,7 +30,7 @@ export const getCredential = async (req: any, res: any) => {
 
 export const getProof = async (req: any, res: any) => {
   try {
-    const resp = await proof();
+    const resp = await proof(req.body);
     res.status(200).json(resp);
   } catch (err) {
     res.status(500).send(err);
