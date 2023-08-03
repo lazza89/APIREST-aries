@@ -27,25 +27,21 @@ export class IssuerController {
   }
 
   public async issueCredential(credential: any) {
-    const schemaLedger =
-      await this.issuer.agent.modules.anoncreds.getCreatedSchemas({
-        schemaName: `${credential.schema}`,
-        schemaVersion: `${credential.schemaVersion}`,
-      });
+    const schema = { name: credential.name, version: credential.version };
 
-    if (schemaLedger.length == 0) {
-      console.log(redText("Schema not found"));
-      return "Schema not found";
+    const [schemaId, credDefId, isPresent] =
+      await this.issuer.checkSchemaAndCredDefInLedger(schema);
+
+    if (isPresent === SchemaAndCredDefInLedger.NONE) {
+      return "Schema and credential definition not present";
     }
-
     const connectionId = await this.issuer.getConnectionId();
 
-    /*
     await this.issuer.customIssueCredential(
       credential,
-      schemaLedger[0].schemaId
+      connectionId,
+      credDefId
     );
-    */
   }
 
   /*
@@ -73,10 +69,6 @@ export class IssuerController {
     //check if schema and credential definition are already in ledger and return SchemaAndCredDefInLedger enum
     const [schemaId, credDefId, isPresent] =
       await this.issuer.checkSchemaAndCredDefInLedger(schema);
-
-    console.log("isPresent: " + isPresent);
-    console.log("schemaId: " + schemaId);
-    console.log("credDefId: " + credDefId);
 
     switch (isPresent) {
       case SchemaAndCredDefInLedger.NONE:

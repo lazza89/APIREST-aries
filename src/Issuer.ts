@@ -338,7 +338,7 @@ export class Issuer extends BaseAgent {
           SchemaAndCredDefInLedger.SCHEMA_AND_CRED_DEF,
         ];
       }
-      return [schemaIdTmp, credDefIdTmp, SchemaAndCredDefInLedger.SCHEMA];
+      return [schemaIdTmp, , SchemaAndCredDefInLedger.SCHEMA];
     }
 
     return [schemaIdTmp, credDefIdTmp, SchemaAndCredDefInLedger.NONE];

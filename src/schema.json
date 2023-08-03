@@ -59,6 +59,35 @@
       },
       "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/0c69aa47-8e84-4348-96df-b9c208d92f1d",
       "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/0e748d40-39c6-4cac-9bb3-46e5b228663e"
+    },
+    "patente-2.0.0": {
+      "schemaState": {
+        "name": "patente",
+        "version": "2.0.0",
+        "attrNames": [
+          "name",
+          "surname",
+          "date",
+          "expireDate"
+        ],
+        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
+      },
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/e2a0c82c-4eb7-4848-872c-dadb4c4afc2f",
+      "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/82ef6aaa-9175-4f5b-9f3a-f30c5ef22043"
+    },
+    "patente-2.0.1": {
+      "schemaState": {
+        "name": "patente",
+        "version": "2.0.1",
+        "attrNames": [
+          "name",
+          "surname",
+          "date"
+        ],
+        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
+      },
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/c9910442-aae2-48e8-ba97-eb69ac26528d",
+      "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/10c5760d-51df-40ee-8516-fc37fd762569"
     }
   }
 }
