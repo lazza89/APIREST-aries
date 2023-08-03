@@ -13,7 +13,7 @@ router.get("/invitationLink", getInvitationLink);
 
 router.post("/credential", getCredential);
 
-router.get("/proof", getProof);
+router.post("/proof", getProof);
 
 router.get("/createDid", createDidModule);
 

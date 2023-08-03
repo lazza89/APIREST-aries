@@ -44,11 +44,38 @@ export class IssuerController {
     );
   }
 
-  /*
-  public async sendProofRequest() {
-    await this.issuer.sendProofRequest();
+  public async sendProofRequest(attribute: any) {
+    let credentialDefinitionId: string[] = [];
+    let proofAttribute: any = {};
+
+    for (const key in attribute) {
+      let n = 1;
+      if (Object.prototype.hasOwnProperty.call(attribute, key)) {
+        const proof = attribute[key];
+        const schema = { name: proof.name, version: proof.version };
+        const [schemaId, credDefId, isPresent] =
+          await this.issuer.checkSchemaAndCredDefInLedger(schema);
+        if (isPresent === SchemaAndCredDefInLedger.NONE) {
+          return "Schema and credential definition not present";
+        }
+
+        credentialDefinitionId.push(credDefId);
+        proofAttribute[proof.name + n] = {
+          name: "name",
+          restrictions: [
+            {
+              cred_def_id: credDefId,
+            },
+          ],
+        };
+      }
+      n++;
+    }
+
+    console.log(JSON.stringify(proofAttribute));
+
+    await this.issuer.sendProofRequest(proofAttribute);
   }
-  */
 
   public async createDid() {
     console.log("Creating did...");
