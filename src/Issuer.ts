@@ -25,7 +25,6 @@ export enum RegistryOptions {
 
 export class Issuer extends BaseAgent {
   public outOfBandId?: string;
-  public credentialDefinition?: RegisterCredentialDefinitionReturnStateFinished;
   public anonCredsIssuerId?: string;
 
   public constructor(port: number, name: string) {
@@ -222,6 +221,10 @@ export class Issuer extends BaseAgent {
             schemaId,
             issuerId: this.anonCredsIssuerId,
             tag: "latest",
+            value: {
+              revocation: "true",
+              primary: undefined,
+            },
           },
           options: {
             endorserMode: "internal",
@@ -240,9 +243,10 @@ export class Issuer extends BaseAgent {
       );
     }
 
-    this.credentialDefinition = credentialDefinitionState;
+    console.log(credentialDefinitionState);
+
     console.log("\nCredential definition registered!!\n");
-    return this.credentialDefinition;
+    return credentialDefinitionState;
   }
 
   public async getConnectionId() {
@@ -353,6 +357,10 @@ export class Issuer extends BaseAgent {
     console.log(
       `\nProof request sent!\n\nGo to the Alice agent to accept the proof request\n\n${Color.Reset}`
     );
+  }
+
+  public revokeCredential(credentialId: string) {
+    //this.agent.credentials.
   }
 
   public async sendMessage(message: string) {
