@@ -57,7 +57,7 @@ export class IssuerController {
 
         credentialDefinitionId.push(credDefId);
         proofAttribute[proof.name + n] = {
-          name: "name",
+          names: proof.attrNames,
           restrictions: [
             {
               cred_def_id: credDefId,
