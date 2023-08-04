@@ -11,27 +11,16 @@ import type {
 
 import {
   ConnectionEventTypes,
-  DidDocument,
   KeyType,
   TypedArrayEncoder,
-  utils,
 } from "@aries-framework/core";
 
 import { BaseAgent } from "./BaseAgent";
 import { Color, Output, greenText, purpleText, redText } from "./OutputClass";
-import {
-  UniversityCredentialsContainer,
-  SchemaAndCredDefInLedger,
-} from "./Utils";
-import { CheqdDidCreateOptions } from "@aries-framework/cheqd";
+import { SchemaAndCredDefInLedger } from "./Utils";
 
 export enum RegistryOptions {
   cheqd = "did:cheqd",
-}
-
-interface Attribute {
-  name: string;
-  value: any;
 }
 
 export class Issuer extends BaseAgent {
@@ -220,45 +209,6 @@ export class Issuer extends BaseAgent {
     return schemaState;
   }
 
-  private async registerSchema() {
-    if (!this.anonCredsIssuerId) {
-      throw new Error(redText("Missing anoncreds issuerId"));
-    }
-    const schemaTemplate = {
-      name: "College",
-      version: "1.0.0",
-      attrNames: ["name", "degree", "date"],
-      issuerId: this.anonCredsIssuerId,
-    };
-    this.printSchema(
-      schemaTemplate.name,
-      schemaTemplate.version,
-      schemaTemplate.attrNames
-    );
-    console.log(greenText("\nRegistering schema...\n", false));
-
-    const { schemaState } =
-      await this.agent.modules.anoncreds.registerSchema<IndyVdrRegisterSchemaOptions>(
-        {
-          schema: schemaTemplate,
-          options: {
-            endorserMode: "internal",
-            endorserDid: this.anonCredsIssuerId,
-          },
-        }
-      );
-
-    if (schemaState.state !== "finished") {
-      throw new Error(
-        `Error registering schema: ${
-          schemaState.state === "failed" ? schemaState.reason : "Not Finished"
-        }`
-      );
-    }
-    console.log("\nSchema registered!\n");
-    return schemaState;
-  }
-
   public async registerCredentialDefinition(schemaId: string) {
     if (!this.anonCredsIssuerId) {
       throw new Error(redText("Missing anoncreds issuerId"));
@@ -380,68 +330,9 @@ export class Issuer extends BaseAgent {
     console.log("credential: ", cred);
   }
 
-  public async issueCredential(credential: any) {
-    const schema = await this.registerSchema();
-    const credentialDefinition = await this.registerCredentialDefinition(
-      schema.schemaId
-    );
-    const connectionRecord = await this.getConnectionRecord();
-
-    console.log(
-      "credentialDefinition: ",
-      credentialDefinition.credentialDefinitionId
-    );
-
-    const cred = await this.agent.credentials.offerCredential({
-      connectionId: connectionRecord.id,
-      protocolVersion: "v2",
-      credentialFormats: {
-        anoncreds: {
-          attributes: [
-            {
-              name: "name",
-              value: credential._name,
-            },
-            {
-              name: "degree",
-              value: credential._degree,
-            },
-            {
-              name: "date",
-              value: credential._date,
-            },
-          ],
-          credentialDefinitionId: credentialDefinition.credentialDefinitionId,
-        },
-      },
-    });
-    console.log(
-      `\nCredential offer sent!\n\nGo to the holder agent to accept the credential offer\n\n${Color.Reset}`
-    );
-    console.log("credential: ", cred);
-  }
-
   private async printProofFlow(print: string) {
     console.log(print);
     await new Promise((f) => setTimeout(f, 2000));
-  }
-
-  private async newProofAttribute() {
-    await this.printProofFlow(
-      greenText(`Creating new proof attribute for 'name' ...\n`)
-    );
-    const proofAttribute = {
-      name: {
-        name: "name",
-        restrictions: [
-          {
-            cred_def_id: this.credentialDefinition?.credentialDefinitionId,
-          },
-        ],
-      },
-    };
-
-    return proofAttribute;
   }
 
   public async sendProofRequest(proofAttribute: any) {

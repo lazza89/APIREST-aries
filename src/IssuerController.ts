@@ -1,12 +1,5 @@
-import { redText } from "./OutputClass";
 import { Issuer } from "./Issuer";
-import {
-  readJsonFile,
-  writeJsonFile,
-  UniversityCredentialsContainer,
-  SchemaAndCredDefInLedger,
-} from "./Utils";
-import { json } from "body-parser";
+import { readJsonFile, writeJsonFile, SchemaAndCredDefInLedger } from "./Utils";
 const path = require("path");
 
 export class IssuerController {
@@ -55,7 +48,10 @@ export class IssuerController {
         const schema = { name: proof.name, version: proof.version };
         const [schemaId, credDefId, isPresent] =
           await this.issuer.checkSchemaAndCredDefInLedger(schema);
-        if (isPresent === SchemaAndCredDefInLedger.NONE) {
+        if (
+          isPresent == SchemaAndCredDefInLedger.NONE ||
+          isPresent == SchemaAndCredDefInLedger.SCHEMA
+        ) {
           return "Schema and credential definition not present";
         }
 
