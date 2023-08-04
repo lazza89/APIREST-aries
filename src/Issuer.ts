@@ -221,10 +221,6 @@ export class Issuer extends BaseAgent {
             schemaId,
             issuerId: this.anonCredsIssuerId,
             tag: "latest",
-            value: {
-              revocation: "true",
-              primary: undefined,
-            },
           },
           options: {
             endorserMode: "internal",
@@ -292,7 +288,7 @@ export class Issuer extends BaseAgent {
           SchemaAndCredDefInLedger.SCHEMA_AND_CRED_DEF,
         ];
       }
-      return [schemaIdTmp, , SchemaAndCredDefInLedger.SCHEMA];
+      return [schemaIdTmp, credDefIdTmp, SchemaAndCredDefInLedger.SCHEMA];
     }
 
     return [schemaIdTmp, credDefIdTmp, SchemaAndCredDefInLedger.NONE];
