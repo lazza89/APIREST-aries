@@ -100,7 +100,7 @@ export class Issuer extends BaseAgent {
     this.outOfBandId = outOfBand.id;
 
     const invite = outOfBand.outOfBandInvitation.toUrl({
-      domain: `http://localhost:${this.port}`,
+      domain: `https://nlazzarin.monokee.com`,
     });
     console.log(Output.ConnectionLink, invite, "\n");
     return invite;
@@ -339,7 +339,7 @@ export class Issuer extends BaseAgent {
     const connectionRecord = await this.getConnectionRecord();
     await this.printProofFlow(greenText("\nRequesting proof...\n", false));
 
-    await this.agent.proofs.requestProof({
+    const ret = await this.agent.proofs.requestProof({
       protocolVersion: "v2",
       connectionId: connectionRecord.id,
       proofFormats: {
@@ -353,6 +353,8 @@ export class Issuer extends BaseAgent {
     console.log(
       `\nProof request sent!\n\nGo to the Alice agent to accept the proof request\n\n${Color.Reset}`
     );
+
+    return ret;
   }
 
   public revokeCredential(credentialId: string) {

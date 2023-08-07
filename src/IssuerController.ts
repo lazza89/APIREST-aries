@@ -70,7 +70,8 @@ export class IssuerController {
 
     console.log(proofAttribute);
 
-    await this.issuer.sendProofRequest(proofAttribute);
+    const ret = await this.issuer.sendProofRequest(proofAttribute);
+    console.log(ret);
   }
 
   public async createDid() {
