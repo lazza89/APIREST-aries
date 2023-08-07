@@ -11,6 +11,7 @@ import type {
 
 import {
   ConnectionEventTypes,
+  ConsoleLogger,
   KeyType,
   TypedArrayEncoder,
 } from "@aries-framework/core";
@@ -95,6 +96,24 @@ export class Issuer extends BaseAgent {
     return connection;
   }
 
+  private extractJWTFromURL(url: string): string {
+    const urlObject = new URL(url);
+    const jwtParam = urlObject.searchParams.get('oob');
+    if (!jwtParam) {
+      throw new Error('JWT not found in the URL');
+    }
+    return jwtParam;
+  }
+
+  private getStringAfterKey(input: string): string | undefined {
+    const keyIndex = input.indexOf("key:");
+    if (keyIndex !== -1) {
+      return input.slice(keyIndex + 4);
+    } else {
+      return undefined;
+    }
+  }
+
   public async printConnectionInvite() {
     const outOfBand = await this.agent.oob.createInvitation();
     this.outOfBandId = outOfBand.id;
@@ -103,7 +122,30 @@ export class Issuer extends BaseAgent {
       domain: `https://nlazzarin.monokee.com`,
     });
     console.log(Output.ConnectionLink, invite, "\n");
-    return invite;
+
+    const jwt = this.extractJWTFromURL(invite);
+    const decoded = atob(jwt); //base 64 decoder
+    const decodedJson = JSON.parse(decoded);
+  
+    const recipientKeysCutted = this.getStringAfterKey(decodedJson["services"][0]["recipientKeys"][0]);
+    let recipientKeysCuttedArray = [];
+    recipientKeysCuttedArray.push(recipientKeysCutted);
+    
+    const JSONreturn = {
+      "@type": decodedJson['@type'],
+      "@id": decodedJson['@id'],
+      "label": decodedJson['label'],
+      "imageUrl": "https://i.imgur.com/g3abcCO.png",
+      "recipientKeys": recipientKeysCuttedArray,
+      "serviceEndpoint": decodedJson["services"][0]['serviceEndpoint'],
+      "routingKeys": decodedJson["services"][0]['routingKeys'],
+    }
+    
+    console.log(decodedJson);
+    console.log(decodedJson.services[0].recipientKeys);
+    console.log(JSONreturn);
+
+    return JSONreturn;
   }
 
   public async waitForConnection() {

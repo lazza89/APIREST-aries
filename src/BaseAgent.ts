@@ -84,7 +84,7 @@ export class BaseAgent {
         id: name,
         key: name,
       },
-      endpoints: [`http://localhost:${this.port}`],
+      endpoints: [`https://nlazzarin.monokee.com`],
     } satisfies InitConfig
 
     this.config = config
