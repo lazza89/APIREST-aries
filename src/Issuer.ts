@@ -32,7 +32,7 @@ export class Issuer extends BaseAgent {
   }
 
   public static async build(): Promise<Issuer> {
-    const faber = new Issuer(9001, "faber");
+    const faber = new Issuer(8080, "faber");
     await faber.initializeAgent();
     return faber;
   }
@@ -96,12 +96,15 @@ export class Issuer extends BaseAgent {
   }
 
   public async printConnectionInvite() {
-    const outOfBand = await this.agent.oob.createInvitation();
-    this.outOfBandId = outOfBand.id;
-
-    const invite = outOfBand.outOfBandInvitation.toUrl({
-      domain: `https://nlazzarin.monokee.com`,
+    const outOfBand = await this.agent.oob.createLegacyInvitation({
+      multiUseInvitation: true,
     });
+    this.outOfBandId = outOfBand.outOfBandRecord.id;
+
+    const invite = outOfBand.invitation.toUrl({
+      domain: `test:`,
+    });
+    console.log(outOfBand);
     console.log(Output.ConnectionLink, invite, "\n");
     return invite;
   }

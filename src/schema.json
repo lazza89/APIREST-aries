@@ -186,6 +186,19 @@
       },
       "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/11a7089e-bf4f-4501-b297-746f57e4c72a",
       "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/1d32ea33-0dc9-4f71-a590-fc9368d92ca9"
+    },
+    "patente-3.0.0": {
+      "schemaState": {
+        "name": "patente",
+        "version": "3.0.0",
+        "attrNames": [
+          "1",
+          "2"
+        ],
+        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
+      },
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/23f79ab6-8322-41fb-b5c1-b764773a9de1",
+      "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/120de2cf-bd73-497f-a9fe-9de778fd7d6e"
     }
   }
 }
