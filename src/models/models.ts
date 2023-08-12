@@ -16,6 +16,7 @@ export const invitationLink = async () => {
     return invite;
   } catch (err) {
     console.log("Error", err);
+    return err.message;
   }
 };
 
@@ -28,6 +29,7 @@ export const acceptConn = async () => {
     return "Connection established";
   } catch (err) {
     console.log("Error", err);
+    return err.message;
   }
 };
 
@@ -40,6 +42,7 @@ export const credential = async (credential: any) => {
     return ret;
   } catch (err) {
     console.log("Error", err);
+    return err.message;
   }
 };
 
@@ -52,6 +55,7 @@ export const proof = async (attribute: any) => {
     return ret;
   } catch (err) {
     console.log("Error", err);
+    return err.message;
   }
 };
 
@@ -64,6 +68,7 @@ export const createDid = async () => {
     return "DID created";
   } catch (err) {
     console.log("Error", err);
+    return err.message;
   }
 };
 
@@ -77,5 +82,6 @@ export const newSchema = async (schema: any) => {
     return ret;
   } catch (err) {
     console.log("Error", err);
+    return err.message;
   }
 };

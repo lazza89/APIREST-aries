@@ -32,7 +32,7 @@ export class Issuer extends BaseAgent {
   }
 
   public static async build(): Promise<Issuer> {
-    const faber = new Issuer(9001, "faber");
+    const faber = new Issuer(8080, "faber");
     await faber.initializeAgent();
     return faber;
   }
@@ -328,6 +328,7 @@ export class Issuer extends BaseAgent {
       `\nCredential offer sent!\n\nGo to the holder agent to accept the credential offer\n\n${Color.Reset}`
     );
     console.log("credential: ", cred);
+    return "Credential sent to holder!";
   }
 
   private async printProofFlow(print: string) {

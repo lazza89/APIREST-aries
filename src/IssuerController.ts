@@ -30,7 +30,7 @@ export class IssuerController {
     }
     const connectionId = await this.issuer.getConnectionId();
 
-    await this.issuer.customIssueCredential(
+    return await this.issuer.customIssueCredential(
       credential,
       connectionId,
       credDefId
