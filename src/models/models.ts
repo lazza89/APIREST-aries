@@ -1,5 +1,4 @@
 import { IssuerController } from "../IssuerController";
-import { UniversityCredentialsContainer } from "Utils";
 
 let issuerController: IssuerController;
 export const InitIssuerController = async () => {
@@ -17,6 +16,7 @@ export const invitationLink = async () => {
     return invite;
   } catch (err) {
     console.log("Error", err);
+    return err.message;
   }
 };
 
@@ -29,6 +29,7 @@ export const acceptConn = async () => {
     return "Connection established";
   } catch (err) {
     console.log("Error", err);
+    return err.message;
   }
 };
 
@@ -41,6 +42,7 @@ export const credential = async (credential: any) => {
     return ret;
   } catch (err) {
     console.log("Error", err);
+    return err.message;
   }
 };
 
@@ -49,10 +51,11 @@ export const proof = async (attribute: any) => {
     if (!issuerController) {
       throw new Error("Issuer not initialized");
     }
-    await issuerController.sendProofRequest(attribute);
-    return "Proof request sent";
+    const ret = await issuerController.sendProofRequest(attribute);
+    return ret;
   } catch (err) {
     console.log("Error", err);
+    return err.message;
   }
 };
 
@@ -65,6 +68,7 @@ export const createDid = async () => {
     return "DID created";
   } catch (err) {
     console.log("Error", err);
+    return err.message;
   }
 };
 
@@ -78,5 +82,6 @@ export const newSchema = async (schema: any) => {
     return ret;
   } catch (err) {
     console.log("Error", err);
+    return err.message;
   }
 };

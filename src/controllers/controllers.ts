@@ -1,5 +1,3 @@
-import { Schema } from "@hyperledger/anoncreds-nodejs";
-import { UniversityCredentialsContainer } from "../Utils";
 import {
   invitationLink,
   acceptConn,

@@ -11,32 +11,20 @@ import type {
 
 import {
   ConnectionEventTypes,
-  DidDocument,
   KeyType,
   TypedArrayEncoder,
-  utils,
 } from "@aries-framework/core";
 
 import { BaseAgent } from "./BaseAgent";
 import { Color, Output, greenText, purpleText, redText } from "./OutputClass";
-import {
-  UniversityCredentialsContainer,
-  SchemaAndCredDefInLedger,
-} from "./Utils";
-import { CheqdDidCreateOptions } from "@aries-framework/cheqd";
+import { SchemaAndCredDefInLedger } from "./Utils";
 
 export enum RegistryOptions {
   cheqd = "did:cheqd",
 }
 
-interface Attribute {
-  name: string;
-  value: any;
-}
-
 export class Issuer extends BaseAgent {
   public outOfBandId?: string;
-  public credentialDefinition?: RegisterCredentialDefinitionReturnStateFinished;
   public anonCredsIssuerId?: string;
 
   public constructor(port: number, name: string) {
@@ -44,7 +32,7 @@ export class Issuer extends BaseAgent {
   }
 
   public static async build(): Promise<Issuer> {
-    const faber = new Issuer(9001, "faber");
+    const faber = new Issuer(8080, "faber");
     await faber.initializeAgent();
     return faber;
   }
@@ -112,7 +100,7 @@ export class Issuer extends BaseAgent {
     this.outOfBandId = outOfBand.id;
 
     const invite = outOfBand.outOfBandInvitation.toUrl({
-      domain: `http://localhost:${this.port}`,
+      domain: `https://nlazzarin.monokee.com`,
     });
     console.log(Output.ConnectionLink, invite, "\n");
     return invite;
@@ -220,45 +208,6 @@ export class Issuer extends BaseAgent {
     return schemaState;
   }
 
-  private async registerSchema() {
-    if (!this.anonCredsIssuerId) {
-      throw new Error(redText("Missing anoncreds issuerId"));
-    }
-    const schemaTemplate = {
-      name: "College",
-      version: "1.0.0",
-      attrNames: ["name", "degree", "date"],
-      issuerId: this.anonCredsIssuerId,
-    };
-    this.printSchema(
-      schemaTemplate.name,
-      schemaTemplate.version,
-      schemaTemplate.attrNames
-    );
-    console.log(greenText("\nRegistering schema...\n", false));
-
-    const { schemaState } =
-      await this.agent.modules.anoncreds.registerSchema<IndyVdrRegisterSchemaOptions>(
-        {
-          schema: schemaTemplate,
-          options: {
-            endorserMode: "internal",
-            endorserDid: this.anonCredsIssuerId,
-          },
-        }
-      );
-
-    if (schemaState.state !== "finished") {
-      throw new Error(
-        `Error registering schema: ${
-          schemaState.state === "failed" ? schemaState.reason : "Not Finished"
-        }`
-      );
-    }
-    console.log("\nSchema registered!\n");
-    return schemaState;
-  }
-
   public async registerCredentialDefinition(schemaId: string) {
     if (!this.anonCredsIssuerId) {
       throw new Error(redText("Missing anoncreds issuerId"));
@@ -290,9 +239,10 @@ export class Issuer extends BaseAgent {
       );
     }
 
-    this.credentialDefinition = credentialDefinitionState;
+    console.log(credentialDefinitionState);
+
     console.log("\nCredential definition registered!!\n");
-    return this.credentialDefinition;
+    return credentialDefinitionState;
   }
 
   public async getConnectionId() {
@@ -338,7 +288,7 @@ export class Issuer extends BaseAgent {
           SchemaAndCredDefInLedger.SCHEMA_AND_CRED_DEF,
         ];
       }
-      return [schemaIdTmp, , SchemaAndCredDefInLedger.SCHEMA];
+      return [schemaIdTmp, credDefIdTmp, SchemaAndCredDefInLedger.SCHEMA];
     }
 
     return [schemaIdTmp, credDefIdTmp, SchemaAndCredDefInLedger.NONE];
@@ -378,47 +328,7 @@ export class Issuer extends BaseAgent {
       `\nCredential offer sent!\n\nGo to the holder agent to accept the credential offer\n\n${Color.Reset}`
     );
     console.log("credential: ", cred);
-  }
-
-  public async issueCredential(credential: any) {
-    const schema = await this.registerSchema();
-    const credentialDefinition = await this.registerCredentialDefinition(
-      schema.schemaId
-    );
-    const connectionRecord = await this.getConnectionRecord();
-
-    console.log(
-      "credentialDefinition: ",
-      credentialDefinition.credentialDefinitionId
-    );
-
-    const cred = await this.agent.credentials.offerCredential({
-      connectionId: connectionRecord.id,
-      protocolVersion: "v2",
-      credentialFormats: {
-        anoncreds: {
-          attributes: [
-            {
-              name: "name",
-              value: credential._name,
-            },
-            {
-              name: "degree",
-              value: credential._degree,
-            },
-            {
-              name: "date",
-              value: credential._date,
-            },
-          ],
-          credentialDefinitionId: credentialDefinition.credentialDefinitionId,
-        },
-      },
-    });
-    console.log(
-      `\nCredential offer sent!\n\nGo to the holder agent to accept the credential offer\n\n${Color.Reset}`
-    );
-    console.log("credential: ", cred);
+    return "Credential sent to holder!";
   }
 
   private async printProofFlow(print: string) {
@@ -426,29 +336,11 @@ export class Issuer extends BaseAgent {
     await new Promise((f) => setTimeout(f, 2000));
   }
 
-  private async newProofAttribute() {
-    await this.printProofFlow(
-      greenText(`Creating new proof attribute for 'name' ...\n`)
-    );
-    const proofAttribute = {
-      name: {
-        name: "name",
-        restrictions: [
-          {
-            cred_def_id: this.credentialDefinition?.credentialDefinitionId,
-          },
-        ],
-      },
-    };
-
-    return proofAttribute;
-  }
-
   public async sendProofRequest(proofAttribute: any) {
     const connectionRecord = await this.getConnectionRecord();
     await this.printProofFlow(greenText("\nRequesting proof...\n", false));
 
-    await this.agent.proofs.requestProof({
+    const ret = await this.agent.proofs.requestProof({
       protocolVersion: "v2",
       connectionId: connectionRecord.id,
       proofFormats: {
@@ -462,6 +354,12 @@ export class Issuer extends BaseAgent {
     console.log(
       `\nProof request sent!\n\nGo to the Alice agent to accept the proof request\n\n${Color.Reset}`
     );
+
+    return "Proof request sent to holder!";
+  }
+
+  public revokeCredential(credentialId: string) {
+    //this.agent.credentials.
   }
 
   public async sendMessage(message: string) {

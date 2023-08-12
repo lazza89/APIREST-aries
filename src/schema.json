@@ -158,6 +158,78 @@
       },
       "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/e7b3b20e-0c33-4d13-9a9b-d7cb340591ca",
       "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/76c0ac56-cb3e-4238-a6fb-d28551ddc9ec"
+    },
+    "patente-2.0.25": {
+      "schemaState": {
+        "name": "patente",
+        "version": "2.0.25",
+        "attrNames": [
+          "name",
+          "surname",
+          "date"
+        ],
+        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
+      },
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/3153aa79-f3a9-48ef-8669-d71d2088a94a",
+      "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/75f7700b-6f19-4e5c-89df-d996a20cd6db"
+    },
+    "patente-2.0.26": {
+      "schemaState": {
+        "name": "patente",
+        "version": "2.0.26",
+        "attrNames": [
+          "name",
+          "surname",
+          "date"
+        ],
+        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
+      },
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/11a7089e-bf4f-4501-b297-746f57e4c72a",
+      "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/1d32ea33-0dc9-4f71-a590-fc9368d92ca9"
+    },
+    "Identity card-1.0.2": {
+      "schemaState": {
+        "name": "Identity card",
+        "version": "1.0.2",
+        "attrNames": [
+          "name",
+          "surname",
+          "date"
+        ],
+        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
+      },
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/92708993-d77d-4f83-9830-2575fc9b632f",
+      "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/ed1f6ce5-a46f-4f2f-a87a-14928b9b7496"
+    },
+    "Identity card-1.0.3": {
+      "schemaState": {
+        "name": "Identity card",
+        "version": "1.0.3",
+        "attrNames": [
+          "name",
+          "surname",
+          "date",
+          "gesù boia"
+        ],
+        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
+      },
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/29089f1a-832b-4368-b900-5f7dde695007",
+      "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/59cb7e2b-d040-4fcd-b475-03418bb7999c"
+    },
+    "Identity card-1.0.4": {
+      "schemaState": {
+        "name": "Identity card",
+        "version": "1.0.4",
+        "attrNames": [
+          "name",
+          "surname",
+          "date",
+          "nationality"
+        ],
+        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
+      },
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/28a5ebc4-5a6c-4932-a035-37d3196aea14",
+      "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/cc7dac1f-682c-4547-9ae6-37a21cd2d283"
     }
   }
 }
