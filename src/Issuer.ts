@@ -355,7 +355,7 @@ export class Issuer extends BaseAgent {
       `\nProof request sent!\n\nGo to the Alice agent to accept the proof request\n\n${Color.Reset}`
     );
 
-    return ret;
+    return "Proof request sent to holder!";
   }
 
   public revokeCredential(credentialId: string) {
