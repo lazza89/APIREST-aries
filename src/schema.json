@@ -230,6 +230,20 @@
       },
       "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/28a5ebc4-5a6c-4932-a035-37d3196aea14",
       "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/cc7dac1f-682c-4547-9ae6-37a21cd2d283"
+    },
+    "Identity card-1.0.5": {
+      "schemaState": {
+        "name": "Identity card",
+        "version": "1.0.5",
+        "attrNames": [
+          "name",
+          "surname",
+          "date"
+        ],
+        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
+      },
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/90d23608-f613-4997-b38a-0d136c741294",
+      "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/ba7468fc-ed75-4ed2-a487-4c45491a5a37"
     }
   }
 }

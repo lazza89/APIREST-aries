@@ -354,7 +354,6 @@ export class Issuer extends BaseAgent {
     console.log(
       `\nProof request sent!\n\nGo to the Alice agent to accept the proof request\n\n${Color.Reset}`
     );
-
     return "Proof request sent to holder!";
   }
 

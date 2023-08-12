@@ -1,14 +1,19 @@
+import { Listener } from "./Listener";
 import { Issuer } from "./Issuer";
 import { readJsonFile, writeJsonFile, SchemaAndCredDefInLedger } from "./Utils";
 const path = require("path");
 
 export class IssuerController {
   private issuer: Issuer;
+  private listener: Listener;
 
   public async init() {
     this.issuer = await Issuer.build();
     const jsonFile = readJsonFile(path.resolve(__dirname, "dids.json"));
     this.issuer.importDid(jsonFile.cheqd.release.did);
+
+    this.listener = new Listener();
+    this.listener.proofAcceptedListener(this.issuer);
   }
 
   public async invitationLink() {
@@ -71,6 +76,7 @@ export class IssuerController {
     console.log(proofAttribute);
 
     const ret = await this.issuer.sendProofRequest(proofAttribute);
+
     return ret;
   }
 

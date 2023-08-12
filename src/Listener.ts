@@ -75,6 +75,13 @@ export class Listener {
       async ({ payload }: ProofStateChangedEvent) => {
         if (payload.proofRecord.state === ProofState.Done) {
           console.log("\n\nProof accepted");
+        } else if (
+          payload.proofRecord.state === ProofState.Declined ||
+          payload.proofRecord.state === ProofState.Abandoned
+        ) {
+          console.log("\n\nProof rejected");
+        } else {
+          console.log("\n\nProof unknown state");
         }
       }
     );
