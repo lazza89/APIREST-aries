@@ -24,6 +24,19 @@ export class IssuerController {
     await this.issuer.waitForConnection();
   }
 
+  public isConnected(){
+    switch(this.issuer.issuerConnectionStatus){
+      case 0:
+        return "Not connected";
+      case 1:
+        return "Wating for connection";
+      case 2:
+        return "Connected";
+      default:
+        return "Error";
+       }
+  }
+
   public async issueCredential(credential: any) {
     const schema = { name: credential.name, version: credential.version };
 

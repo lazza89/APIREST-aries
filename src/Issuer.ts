@@ -17,7 +17,8 @@ import {
 
 import { BaseAgent } from "./BaseAgent";
 import { Color, Output, greenText, purpleText, redText } from "./OutputClass";
-import { SchemaAndCredDefInLedger } from "./Utils";
+import { SchemaAndCredDefInLedger, IssuerConnectionStatus } from "./Utils";
+import { textChangeRangeIsUnchanged } from "typescript";
 
 export enum RegistryOptions {
   cheqd = "did:cheqd",
@@ -26,6 +27,7 @@ export enum RegistryOptions {
 export class Issuer extends BaseAgent {
   public outOfBandId?: string;
   public anonCredsIssuerId?: string;
+  public issuerConnectionStatus: IssuerConnectionStatus = IssuerConnectionStatus.NOT_CONNECTED;
 
   public constructor(port: number, name: string) {
     super({ port, name, useLegacyIndySdk: true });
@@ -96,6 +98,8 @@ export class Issuer extends BaseAgent {
   }
 
   public async printConnectionInvite() {
+    this.issuerConnectionStatus = IssuerConnectionStatus.REQUESTED;
+
     const outOfBand = await this.agent.oob.createInvitation();
     this.outOfBandId = outOfBand.id;
 
@@ -104,6 +108,12 @@ export class Issuer extends BaseAgent {
     });
     console.log(Output.ConnectionLink, invite, "\n");
     return invite;
+  }
+
+
+  timeoutConnection(reject: (reason?: any) => void): void {
+    this.issuerConnectionStatus = IssuerConnectionStatus.NOT_CONNECTED;
+    reject(new Error(redText(Output.MissingConnectionRecord)))
   }
 
   public async waitForConnection() {
@@ -117,8 +127,8 @@ export class Issuer extends BaseAgent {
       new Promise<ConnectionRecord>((resolve, reject) => {
         // Timeout of 20 seconds
         const timeoutId = setTimeout(
-          () => reject(new Error(redText(Output.MissingConnectionRecord))),
-          20000000
+          () => this.timeoutConnection(reject),
+          30000
         );
 
         // Start listener
@@ -154,6 +164,7 @@ export class Issuer extends BaseAgent {
       return;
     }
     console.log(greenText(Output.ConnectionEstablished));
+    this.issuerConnectionStatus = IssuerConnectionStatus.CONNECTED;
   }
 
   private printSchema(name: string, version: string, attributes: string[]) {

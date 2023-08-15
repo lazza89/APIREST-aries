@@ -85,3 +85,18 @@ export const newSchema = async (schema: any) => {
     return err.message;
   }
 };
+
+export const isConn = async () => {
+  try {
+    if (!issuerController) {
+      throw new Error("Issuer not initialized");
+    }
+    const ret = await issuerController.isConnected();
+
+    return ret;
+  } catch (err) {
+    console.log("Error", err);
+    return err.message;
+  }
+};
+

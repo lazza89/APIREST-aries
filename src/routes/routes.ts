@@ -5,11 +5,14 @@ import {
   getProof,
   createDidModule,
   registerSchema,
+  isConnected,
 } from "../controllers/controllers";
 
 const router = express.Router();
 
 router.get("/invitationLink", getInvitationLink);
+
+router.get("/isConnected", isConnected);
 
 router.post("/credential", getCredential);
 

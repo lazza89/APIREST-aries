@@ -3,6 +3,12 @@ interface DidData {
   did: string;
 }
 
+export enum IssuerConnectionStatus {
+  NOT_CONNECTED,
+  REQUESTED,
+  CONNECTED,
+}
+
 export interface CheqdData {
   cheqd: {
     [key: string]: DidData;
