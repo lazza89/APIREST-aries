@@ -7,6 +7,7 @@ import {
   newSchema,
   isConn,
   credStatus,
+  proofStat,
 } from "../models/models";
 
 export const getInvitationLink = async (req: any, res: any) => {
@@ -67,6 +68,15 @@ export const isConnected = async (req: any, res: any) => {
 export const credentialSatus = async (req: any, res: any) => {
   try {
     const resp = await credStatus();
+    res.status(200).json(resp);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
+export const proofStatus = async (req: any, res: any) => {
+  try {
+    const resp = await proofStat();
     res.status(200).json(resp);
   } catch (err) {
     res.status(500).send(err);

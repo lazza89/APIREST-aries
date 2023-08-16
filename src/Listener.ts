@@ -1,4 +1,4 @@
-import { readJsonFile, writeJsonFile, SchemaAndCredDefInLedger, IssuerCredentialStatus } from "./Utils";
+import { readJsonFile, writeJsonFile, SchemaAndCredDefInLedger, IssuerCredentialStatus, IssuerProofStatus } from "./Utils";
 
 import type { Issuer } from "./Issuer";
 import type {
@@ -90,19 +90,22 @@ export class Listener {
     })
   }
 
-  public proofAcceptedListener(faber: Issuer) {
-    faber.agent.events.on(
+  public proofAcceptedListener(issuer: Issuer) {
+    issuer.agent.events.on(
       ProofEventTypes.ProofStateChanged,
       async ({ payload }: ProofStateChangedEvent) => {
         if (payload.proofRecord.state === ProofState.Done) {
           console.log("\n\nProof accepted");
+          issuer.issuerProofStatus = IssuerProofStatus.ACCEPTED;
         } else if (
           payload.proofRecord.state === ProofState.Declined ||
           payload.proofRecord.state === ProofState.Abandoned
         ) {
           console.log("\n\nProof rejected");
-        } else {
-          console.log("\n\nProof unknown state");
+          issuer.issuerProofStatus = IssuerProofStatus.DECLINED;
+        } else if (payload.proofRecord.state === ProofState.RequestSent) {
+          console.log("\n\nProof requested");
+          issuer.issuerProofStatus = IssuerProofStatus.ON_HOLD;
         }
       }
     );

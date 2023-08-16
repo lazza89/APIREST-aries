@@ -17,7 +17,7 @@ import {
 
 import { BaseAgent } from "./BaseAgent";
 import { Color, Output, greenText, purpleText, redText } from "./OutputClass";
-import { SchemaAndCredDefInLedger, IssuerConnectionStatus, IssuerCredentialStatus } from "./Utils";
+import { SchemaAndCredDefInLedger, IssuerConnectionStatus, IssuerCredentialStatus, IssuerProofStatus } from "./Utils";
 import { textChangeRangeIsUnchanged } from "typescript";
 
 export enum RegistryOptions {
@@ -29,6 +29,7 @@ export class Issuer extends BaseAgent {
   public anonCredsIssuerId?: string;
   public issuerConnectionStatus: IssuerConnectionStatus = IssuerConnectionStatus.NOT_CONNECTED;
   public issuerCredentialStatus: IssuerCredentialStatus = IssuerCredentialStatus.NONE;
+  public issuerProofStatus: IssuerProofStatus = IssuerProofStatus.NONE;
 
   public constructor(port: number, name: string) {
     super({ port, name, useLegacyIndySdk: true });

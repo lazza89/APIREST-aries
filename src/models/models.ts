@@ -113,3 +113,17 @@ export const credStatus = async () => {
     return err.message;
   }
 };
+
+export const proofStat = async () => {
+  try {
+    if (!issuerController) {
+      throw new Error("Issuer not initialized");
+    }
+    const ret = await issuerController.proofStatus();
+
+    return ret;
+  } catch (err) {
+    console.log("Error", err);
+    return err.message;
+  }
+};

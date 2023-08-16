@@ -17,6 +17,14 @@ export enum IssuerCredentialStatus {
   ACCEPTED,
 }
 
+export enum IssuerProofStatus{
+  NONE,
+  ON_HOLD,
+  INVALID,
+  DECLINED,
+  ACCEPTED,
+}
+
 export interface CheqdData {
   cheqd: {
     [key: string]: DidData;

@@ -1,6 +1,6 @@
 import { Listener } from "./Listener";
 import { Issuer } from "./Issuer";
-import { readJsonFile, writeJsonFile, SchemaAndCredDefInLedger, IssuerCredentialStatus } from "./Utils";
+import { readJsonFile, writeJsonFile, SchemaAndCredDefInLedger, IssuerCredentialStatus, IssuerProofStatus } from "./Utils";
 const path = require("path");
 
 export class IssuerController {
@@ -69,6 +69,23 @@ export class IssuerController {
       connectionId,
       credDefId
     );
+  }
+
+  public proofStatus(){
+    switch(this.issuer.issuerProofStatus){
+      case IssuerProofStatus.NONE:
+        return "Not received yet";
+      case IssuerProofStatus.ON_HOLD:
+        return "Wating for proof to be accepted";
+      case IssuerProofStatus.ACCEPTED:
+        return "The proof has been accepted";
+      case IssuerProofStatus.DECLINED:
+        return "The proof has been declined";
+      case IssuerProofStatus.INVALID:
+        return "The proof is invalid";
+      default:
+        return "Error in proof status";
+       }
   }
 
   public async sendProofRequest(attribute: any) {
