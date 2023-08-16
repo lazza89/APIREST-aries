@@ -39,7 +39,7 @@ export class IssuerController {
   }
 
   public credentialStatus(){
-    switch(this.listener.issuerCredentialStatus){
+    switch(this.issuer.issuerCredentialStatus){
       case IssuerCredentialStatus.NONE:
         return "Not received";
       case IssuerCredentialStatus.ISSUED:
