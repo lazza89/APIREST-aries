@@ -100,3 +100,16 @@ export const isConn = async () => {
   }
 };
 
+export const credStatus = async () => {
+  try {
+    if (!issuerController) {
+      throw new Error("Issuer not initialized");
+    }
+    const ret = await issuerController.credentialStatus();
+
+    return ret;
+  } catch (err) {
+    console.log("Error", err);
+    return err.message;
+  }
+};

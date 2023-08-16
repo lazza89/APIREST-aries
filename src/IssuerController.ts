@@ -1,6 +1,6 @@
 import { Listener } from "./Listener";
 import { Issuer } from "./Issuer";
-import { readJsonFile, writeJsonFile, SchemaAndCredDefInLedger } from "./Utils";
+import { readJsonFile, writeJsonFile, SchemaAndCredDefInLedger, IssuerCredentialStatus } from "./Utils";
 const path = require("path");
 
 export class IssuerController {
@@ -14,6 +14,7 @@ export class IssuerController {
 
     this.listener = new Listener();
     this.listener.proofAcceptedListener(this.issuer);
+    this.listener.credentialListener(this.issuer);
   }
 
   public async invitationLink() {
@@ -32,6 +33,21 @@ export class IssuerController {
         return "Wating for connection";
       case 2:
         return "Connected";
+      default:
+        return "Error";
+       }
+  }
+
+  public credentialStatus(){
+    switch(this.listener.issuerCredentialStatus){
+      case IssuerCredentialStatus.NONE:
+        return "Not received";
+      case IssuerCredentialStatus.ISSUED:
+        return "Wating for credential to be accepted";
+      case IssuerCredentialStatus.ACCEPTED:
+        return "The holder has received the credentials";
+      case IssuerCredentialStatus.DECLINED:
+        return "the holder has declined the credentials";
       default:
         return "Error";
        }

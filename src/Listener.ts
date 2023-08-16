@@ -1,3 +1,5 @@
+import { readJsonFile, writeJsonFile, SchemaAndCredDefInLedger, IssuerCredentialStatus } from "./Utils";
+
 import type { Issuer } from "./Issuer";
 import type {
   Agent,
@@ -24,10 +26,12 @@ import { Color, purpleText } from "./OutputClass";
 export class Listener {
   public on: boolean;
   private ui: BottomBar;
+  public issuerCredentialStatus: IssuerCredentialStatus;
 
   public constructor() {
     this.on = false;
     this.ui = new ui.BottomBar();
+    this.issuerCredentialStatus = IssuerCredentialStatus.NONE;
   }
 
   private turnListenerOn() {
@@ -67,6 +71,25 @@ export class Listener {
         }
       }
     );
+  }
+
+  public credentialListener(issuer: Issuer) {
+    issuer.agent.events.on(CredentialEventTypes.CredentialStateChanged, async ({payload}: CredentialStateChangedEvent) => {
+      
+      this.issuerCredentialStatus = IssuerCredentialStatus.NONE;
+
+      if(payload.credentialRecord.state === CredentialState.CredentialIssued){
+        console.log("\n\nCredential offer sent!");
+        this.issuerCredentialStatus = IssuerCredentialStatus.ISSUED;
+      }else if(payload.credentialRecord.state === CredentialState.Done){
+        console.log("\n\nCredential accepted!");
+        this.issuerCredentialStatus = IssuerCredentialStatus.ACCEPTED;
+      }else if(payload.credentialRecord.state === CredentialState.Declined){
+        console.log("\n\nCredential declined!");
+        this.issuerCredentialStatus = IssuerCredentialStatus.DECLINED;
+      }
+
+    })
   }
 
   public proofAcceptedListener(faber: Issuer) {

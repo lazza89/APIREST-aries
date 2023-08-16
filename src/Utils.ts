@@ -9,6 +9,14 @@ export enum IssuerConnectionStatus {
   CONNECTED,
 }
 
+export enum IssuerCredentialStatus {
+  NONE,
+  ISSUED,
+  REVOKED,
+  DECLINED,
+  ACCEPTED,
+}
+
 export interface CheqdData {
   cheqd: {
     [key: string]: DidData;

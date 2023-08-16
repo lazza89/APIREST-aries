@@ -6,6 +6,7 @@ import {
   createDidModule,
   registerSchema,
   isConnected,
+  credentialSatus,
 } from "../controllers/controllers";
 
 const router = express.Router();
@@ -15,6 +16,8 @@ router.get("/invitationLink", getInvitationLink);
 router.get("/isConnected", isConnected);
 
 router.post("/credential", getCredential);
+
+router.get("/credentialStatus", credentialSatus);
 
 router.post("/proof", getProof);
 

@@ -244,6 +244,62 @@
       },
       "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/90d23608-f613-4997-b38a-0d136c741294",
       "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/ba7468fc-ed75-4ed2-a487-4c45491a5a37"
+    },
+    "Identity card-1.0.10": {
+      "schemaState": {
+        "name": "Identity card",
+        "version": "1.0.10",
+        "attrNames": [
+          "name",
+          "surname",
+          "date"
+        ],
+        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
+      },
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/b11f3ae9-febb-4ffe-98bf-a84cff0a9540",
+      "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/033df6df-d8a9-4863-919e-5234da6cf0a2"
+    },
+    "Identity card-1.0.11": {
+      "schemaState": {
+        "name": "Identity card",
+        "version": "1.0.11",
+        "attrNames": [
+          "name",
+          "surname",
+          "date"
+        ],
+        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
+      },
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/2f972fec-5717-4979-9cde-ee6fe24b42eb",
+      "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/182e712f-e331-4622-a770-acded406fa7e"
+    },
+    "Identity card-1.0.12": {
+      "schemaState": {
+        "name": "Identity card",
+        "version": "1.0.12",
+        "attrNames": [
+          "name",
+          "surname",
+          "date"
+        ],
+        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
+      },
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/fb075ebe-32a9-40c8-833f-5d2c76f442c6",
+      "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/3bedd8e7-6f52-426d-bb11-cae09cef5232"
+    },
+    "Identity card-1.0.13": {
+      "schemaState": {
+        "name": "Identity card",
+        "version": "1.0.13",
+        "attrNames": [
+          "name",
+          "surname",
+          "date"
+        ],
+        "issuerId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1"
+      },
+      "schemaId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/f2010e38-6d25-43e4-8fc2-79b5c8c3a803",
+      "credentialDefinitionId": "did:cheqd:testnet:b6843bcc-2a34-431a-bb61-958c03c91ba1/resources/f1f6c0b0-9f12-495c-8d9b-7d62fe420fa2"
     }
   }
 }
